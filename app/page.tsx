@@ -42,7 +42,7 @@ className="text-4xl md:text-6xl lg:text-7xl font-bold"
 
 >
 
-Powering-Up Intelligent Embedded
+Powering Embedded Intelligence
 
 </motion.h1>
 
