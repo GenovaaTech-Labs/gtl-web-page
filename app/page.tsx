@@ -18,7 +18,7 @@ export default function Home() {
             className="h-10 w-auto hover:scale-110 transition duration-300 drop-shadow-[0_0_8px_#00BFFF]"
         />
         <span className="text-xl font-bold text-[#00BFFF]">
-        GenovaTech Labs
+        GenovaaTech Labs
         </span>
       </div>
 
