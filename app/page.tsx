@@ -58,17 +58,18 @@ Embedded AI • IoT • RTOS • Edge AI • FPGA
 
 <div className="w-[180px] h-[180px] md:w-[260px] md:h-[260px] border border-[#00BFFF] rounded-xl flex flex-col items-center justify-center bg-[#0B1120] shadow-[0_0_60px_#00BFFF]">
 
-<p className="text-[#00BFFF] font-bold text-lg">
+          <img
+            src="/logo.png"
+            alt="GenovaaTech Labs Logo"
+            className="w-28 md:w-36 h-auto object-contain drop-shadow-[0_0_15px_#00BFFF]"
+          />
 
-GenovaaTech Labs
-
-</p>
-
-<p className="text-xs text-gray-400 mt-2">
-
-Engineering the Future 
-
-</p>
+          <p className="text-[#00BFFF] font-bold text-lg">
+            GenovaaTech Labs
+          </p>
+          <p className="text-xs text-gray-400 mt-2">
+            Engineering Embedded Intelligence
+          </p>
 
 </div>
 
@@ -105,6 +106,126 @@ Start Learning
 </div>
 
 </section>
+
+{/* ABOUT US */}
+
+<section
+  id="about"
+  className="py-24 md:py-32 px-6 md:px-8 bg-[#111827]"
+>
+
+  <div className="max-w-5xl mx-auto text-center">
+
+    <h2 className="text-4xl font-bold mb-8">
+      About GenovaaTech Labs
+    </h2>
+
+    <p className="text-gray-400 text-lg leading-8">
+      GenovaaTech Labs is a deep-tech engineering company focused on
+      Embedded Systems, IoT, Edge AI, and engineering education.
+      We bridge the gap between theory and real-world innovation by
+      delivering intelligent solutions, industry-oriented training,
+      and customized project development for students, startups,
+      and businesses.
+    </p>
+
+  </div>
+
+  <div className="grid md:grid-cols-3 gap-8 mt-16">
+
+  {[
+    { value: "50+", label: "Projects Delivered" },
+    { value: "100+", label: "Students Trained" },
+    { value: "100%", label: "Practical Learning" },
+  ].map((item, i) => (
+    <div
+      key={i}
+      className="p-8 bg-[#0B1120] rounded-xl border border-gray-800"
+    >
+      <h3 className="text-4xl font-bold text-[#00BFFF]">
+        {item.value}
+      </h3>
+
+      <p className="mt-3 text-gray-400">
+        {item.label}
+      </p>
+    </div>
+  ))}
+
+</div>
+
+</section>
+
+{/* WHY CHOOSE US */}
+
+<section className="py-24 px-6 md:px-8 bg-[#0B1120] text-center">
+
+  <div className="max-w-6xl mx-auto">
+
+    <h2 className="text-4xl font-bold mb-4">
+      Why Choose GenovaaTech Labs?
+    </h2>
+
+    <p className="text-gray-400 max-w-3xl mx-auto mb-16">
+      We combine industry expertise, practical learning, and innovative
+      engineering to deliver solutions that create real impact.
+    </p>
+
+    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+
+      {[
+        {
+          icon: "🛠️",
+          title: "Industry Projects",
+          desc: "Hands-on experience through real-world embedded and IoT projects.",
+        },
+        {
+          icon: "🎓",
+          title: "Expert Mentorship",
+          desc: "Learn directly from experienced engineers with industry exposure.",
+        },
+        {
+          icon: "💡",
+          title: "Practical Training",
+          desc: "Build products and gain skills through implementation-focused learning.",
+        },
+        {
+          icon: "🤝",
+          title: "End-to-End Support",
+          desc: "From ideation to deployment, we support every stage of development.",
+        },
+      ].map((item, i) => (
+
+        <motion.div
+          key={i}
+          initial={{ opacity: 0, y: 40 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          transition={{ delay: i * 0.2 }}
+          className="p-8 bg-[#111827] rounded-2xl border border-gray-800 hover:border-[#00BFFF] hover:-translate-y-2 transition duration-300"
+        >
+
+          <div className="text-5xl mb-6">
+            {item.icon}
+          </div>
+
+          <h3 className="text-xl font-semibold mb-4">
+            {item.title}
+          </h3>
+
+          <p className="text-gray-400 text-sm leading-7">
+            {item.desc}
+          </p>
+
+        </motion.div>
+
+      ))}
+
+    </div>
+
+  </div>
+
+</section>
+
 {/* ENGINEERING PROCESS */}
 
 <section className="py-28 bg-[#111827] text-center px-6">

@@ -29,13 +29,25 @@ GenovaaTech Labs
 
 <div className="hidden md:flex gap-8 text-sm">
 
-<a href="#services" className="hover:text-[#00BFFF]">Services</a>
+<a href="#about" className="hover:text-[#00BFFF] transition">
+  About Us
+</a>
 
-<a href="#projects" className="hover:text-[#00BFFF]">Projects</a>
+<a href="#services" className="hover:text-[#00BFFF] transition">
+  Services
+</a>
 
-<a href="#training" className="hover:text-[#00BFFF]">Training</a>
+<a href="#projects" className="hover:text-[#00BFFF] transition">
+  Projects
+</a>
 
-<a href="#contact" className="hover:text-[#00BFFF]">Contact</a>
+<a href="#training" className="hover:text-[#00BFFF] transition">
+  Training
+</a>
+
+<a href="#contact" className="hover:text-[#00BFFF] transition">
+  Contact
+</a>
 
 </div>
 
@@ -58,13 +70,25 @@ onClick={()=>setMenuOpen(!menuOpen)}
 
 <div className="md:hidden flex flex-col items-center gap-6 py-6 bg-[#0B1120] border-t border-gray-800">
 
-<a href="#services" onClick={()=>setMenuOpen(false)}>Services</a>
+<a href="#about" onClick={()=>setMenuOpen(false)}>
+  About Us
+</a>
 
-<a href="#projects" onClick={()=>setMenuOpen(false)}>Projects</a>
+<a href="#services" onClick={()=>setMenuOpen(false)}>
+  Services
+</a>
 
-<a href="#training" onClick={()=>setMenuOpen(false)}>Training</a>
+<a href="#projects" onClick={()=>setMenuOpen(false)}>
+  Projects
+</a>
 
-<a href="#contact" onClick={()=>setMenuOpen(false)}>Contact</a>
+<a href="#training" onClick={()=>setMenuOpen(false)}>
+  Training
+</a>
+
+<a href="#contact" onClick={()=>setMenuOpen(false)}>
+  Contact
+</a>
 
 </div>
 
