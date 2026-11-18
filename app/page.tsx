@@ -3,6 +3,8 @@
 import { motion } from "framer-motion";
 import ParticlesBG from "@/components/ParticlesBG";
 import Navbar from "@/components/Navbar";
+import Link from "next/link";
+import { COURSES, CONTACT_EMAIL } from "@/lib/enquiry";
 
 export default function Home() {
 
@@ -26,7 +28,7 @@ return (
 
 {/* HERO */}
 
-<section className="h-screen flex flex-col justify-center items-center text-center px-6">
+<section className="relative isolate min-h-screen flex flex-col justify-center items-center text-center px-6 pt-28 pb-16">
 
 <div className="absolute w-[600px] h-[600px] bg-[#00BFFF]/20 blur-[160px] rounded-full -z-10"></div>
 
@@ -77,7 +79,7 @@ Embedded AI • IoT • RTOS • Edge AI • FPGA
 
 </div>
 
-<div className="flex gap-6 mt-12">
+<div className="flex flex-wrap justify-center gap-4 md:gap-6 mt-12">
 
 <a
 
@@ -344,15 +346,14 @@ className="p-8 bg-[#111827] rounded-xl border border-gray-800 hover:border-[#00B
 
 <div className="mt-12">
 
-<a
-href="https://forms.gle/cPjsh5BADUWXDxhL8"
-target="_blank"
+<Link
+href="/contact?type=project"
 className="px-8 py-3 bg-[#00BFFF] text-black rounded-xl font-semibold hover:scale-110 transition"
 >
 
 Get Customized Project
 
-</a>
+</Link>
 
 </div>
 
@@ -417,7 +418,7 @@ Featured Projects
   "Wearable Health Monitor",
   "Smart Agriculture System",
   "Industrial IoT Platform",
-  "Alchol Detection Device",
+  "Alcohol Detection Device",
   "Smart Energy Meter",
   "Driver Monitoring System",
   "Smart Parking Solution",
@@ -450,22 +451,20 @@ className="p-8 bg-[#0B1120] rounded-xl border border-gray-800 hover:border-[#00B
 </div>
 <div className="mt-12">
 
-<a
-href="https://forms.gle/T26YRJUGvZbzGdyX8"
-target="_blank"
+<Link
+href="/contact?type=project"
 className="px-8 py-3 bg-[#00BFFF] text-black rounded-xl font-semibold hover:scale-110 transition"
 >
 
 Get Customized Project
 
-</a>
+</Link>
 
 </div>
 
 
 </section>
 
-{/* TRAINING */}
 {/* TRAINING */}
 
 <section id="training" className="py-20 md:py-32 text-center px-6 md:px-8">
@@ -476,18 +475,7 @@ Training Programs
 
 <div className="grid grid-cols-1 md:grid-cols-3 gap-10 max-w-5xl mx-auto">
 
-{[
-"C Programming",
-"C++ Programming",
-"Embedded Linux",
-"RTOS Development",
-"Embeeded AI Programming",
-"IoT System Design",
-"FPGA Development",
-"Mini Projects",
-"Major Projects"
-
-].map((item,i)=>(
+{COURSES.map((item,i)=>(
 
 <div
 key={i}
@@ -506,15 +494,14 @@ className="p-8 bg-[#111827] rounded-xl border border-gray-800 hover:border-[#00B
 
 <div className="mt-14">
 
-<a
-href="https://forms.gle/4CAXfvvgSEZoz46CA"
-target="_blank"
+<Link
+href="/contact?type=training"
 className="px-10 py-4 bg-[#00BFFF] text-black font-semibold rounded-xl hover:scale-110 transition"
 >
 
 Register Now
 
-</a>
+</Link>
 
 </div>
 
@@ -532,21 +519,27 @@ Contact Us
 
 <p className="text-gray-400 mb-8">
 
-Let's collaborate on projects or training.
+Let&apos;s collaborate on projects or training.
 
 </p>
 
-<a
+<div className="flex flex-wrap justify-center gap-4">
 
-href="mailto:connect@genovaatechlabs.com"
-
-className="px-8 py-3 bg-[#00BFFF] text-black rounded-xl font-semibold"
-
+<Link
+href="/contact"
+className="px-8 py-3 bg-[#00BFFF] text-black rounded-xl font-semibold hover:scale-110 transition"
 >
+Send an Enquiry
+</Link>
 
-connect@genovaatechlabs.com
-
+<a
+href={`mailto:${CONTACT_EMAIL}`}
+className="px-8 py-3 border border-[#00BFFF] rounded-xl hover:bg-[#00BFFF] hover:text-black transition"
+>
+{CONTACT_EMAIL}
 </a>
+
+</div>
 
 </section>
 

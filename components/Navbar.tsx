@@ -17,7 +17,7 @@ return (
 
 <Link href="/" className="flex items-center gap-3">
 
-<img src="/logo.png" className="h-10"/>
+<img src="/logo.png" alt="" className="h-10"/>
 
 <span className="text-xl font-bold text-[#00BFFF]">
 GenovaaTech Labs
@@ -29,25 +29,25 @@ GenovaaTech Labs
 
 <div className="hidden md:flex gap-8 text-sm">
 
-<a href="#about" className="hover:text-[#00BFFF] transition">
+<Link href="/#about" className="hover:text-[#00BFFF] transition">
   About Us
-</a>
+</Link>
 
-<a href="#services" className="hover:text-[#00BFFF] transition">
+<Link href="/#services" className="hover:text-[#00BFFF] transition">
   Services
-</a>
+</Link>
 
-<a href="#projects" className="hover:text-[#00BFFF] transition">
+<Link href="/#projects" className="hover:text-[#00BFFF] transition">
   Projects
-</a>
+</Link>
 
-<a href="#training" className="hover:text-[#00BFFF] transition">
+<Link href="/#training" className="hover:text-[#00BFFF] transition">
   Training
-</a>
+</Link>
 
-<a href="#contact" className="hover:text-[#00BFFF] transition">
+<Link href="/#contact" className="hover:text-[#00BFFF] transition">
   Contact
-</a>
+</Link>
 
 </div>
 
@@ -55,10 +55,13 @@ GenovaaTech Labs
 
 <button
 className="md:hidden text-[#00BFFF] text-2xl"
+aria-label={menuOpen ? "Close menu" : "Open menu"}
+aria-expanded={menuOpen}
+aria-controls="mobile-menu"
 onClick={()=>setMenuOpen(!menuOpen)}
 >
 
-☰
+{menuOpen ? "✕" : "☰"}
 
 </button>
 
@@ -68,27 +71,27 @@ onClick={()=>setMenuOpen(!menuOpen)}
 
 {menuOpen && (
 
-<div className="md:hidden flex flex-col items-center gap-6 py-6 bg-[#0B1120] border-t border-gray-800">
+<div id="mobile-menu" className="md:hidden flex flex-col items-center gap-6 py-6 bg-[#0B1120] border-t border-gray-800">
 
-<a href="#about" onClick={()=>setMenuOpen(false)}>
+<Link href="/#about" onClick={()=>setMenuOpen(false)}>
   About Us
-</a>
+</Link>
 
-<a href="#services" onClick={()=>setMenuOpen(false)}>
+<Link href="/#services" onClick={()=>setMenuOpen(false)}>
   Services
-</a>
+</Link>
 
-<a href="#projects" onClick={()=>setMenuOpen(false)}>
+<Link href="/#projects" onClick={()=>setMenuOpen(false)}>
   Projects
-</a>
+</Link>
 
-<a href="#training" onClick={()=>setMenuOpen(false)}>
+<Link href="/#training" onClick={()=>setMenuOpen(false)}>
   Training
-</a>
+</Link>
 
-<a href="#contact" onClick={()=>setMenuOpen(false)}>
+<Link href="/#contact" onClick={()=>setMenuOpen(false)}>
   Contact
-</a>
+</Link>
 
 </div>
 
