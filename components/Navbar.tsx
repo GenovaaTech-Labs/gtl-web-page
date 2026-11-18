@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import Link from "next/link";
+import Image from "next/image";
 
 export default function Navbar() {
 
@@ -17,7 +18,7 @@ return (
 
 <Link href="/" className="flex items-center gap-3">
 
-<img src="/logo.png" alt="" className="h-10"/>
+<Image src="/logo.png" alt="" width={48} height={40} preload className="h-10 w-auto"/>
 
 <span className="text-xl font-bold text-[#00BFFF]">
 GenovaaTech Labs

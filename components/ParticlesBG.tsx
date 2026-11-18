@@ -1,58 +1,49 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import Particles from "@tsparticles/react";
-import { initParticlesEngine } from "@tsparticles/react";
+import Particles, { initParticlesEngine } from "@tsparticles/react";
 import { loadSlim } from "@tsparticles/slim";
 
 export default function ParticlesBG() {
+  const [init, setInit] = useState(false);
+  const [reduceMotion, setReduceMotion] = useState(false);
 
-const [init, setInit] = useState(false);
+  useEffect(() => {
+    const query = window.matchMedia("(prefers-reduced-motion: reduce)");
+    const update = () => setReduceMotion(query.matches);
+    update();
+    query.addEventListener("change", update);
 
-useEffect(() => {
-initParticlesEngine(async (engine) => {
-await loadSlim(engine);
-}).then(() => {
-setInit(true);
-});
-}, []);
+    initParticlesEngine(async (engine) => {
+      await loadSlim(engine);
+    }).then(() => setInit(true));
 
-if (!init) return null;
+    return () => query.removeEventListener("change", update);
+  }, []);
 
-return (
-<Particles
-id="tsparticles"
-options={{
-background:{color:"transparent"},
+  if (!init) return null;
 
-fpsLimit:60,
-
-particles:{
-
-number:{value:40},
-
-color:{value:"#00BFFF"},
-
-links:{
-enable:true,
-color:"#00BFFF",
-distance:150,
-opacity:0.2
-},
-
-move:{
-enable:true,
-speed:1
-},
-
-opacity:{value:0.4},
-
-size:{value:2}
-
-}
-
-}}
-/>
-);
-
+  return (
+    <Particles
+      id="tsparticles"
+      options={{
+        background: { color: "transparent" },
+        fpsLimit: 60,
+        particles: {
+          number: { value: 40 },
+          color: { value: "#00BFFF" },
+          links: {
+            enable: true,
+            color: "#00BFFF",
+            distance: 150,
+            opacity: 0.2,
+          },
+          // Keep the network visible but still for visitors who prefer reduced motion.
+          move: { enable: !reduceMotion, speed: 1 },
+          opacity: { value: 0.4 },
+          size: { value: 2 },
+        },
+      }}
+    />
+  );
 }

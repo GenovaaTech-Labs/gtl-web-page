@@ -7,6 +7,9 @@ export const metadata: Metadata = {
   title: "Contact & Enquiries | GenovaaTech Labs",
   description:
     "Request a custom Embedded / IoT / Edge AI project, register for a training program, or get in touch with GenovaaTech Labs.",
+  alternates: { canonical: "/contact" },
+  // Not linked from the site or indexed until the email backend (SMTP) is configured.
+  robots: { index: false, follow: true },
 };
 
 export default async function ContactPage({

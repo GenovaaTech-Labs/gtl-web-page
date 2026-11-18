@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
+import { SITE_DESCRIPTION, SITE_NAME, SITE_TITLE, SITE_URL } from "@/lib/site";
 import "./globals.css";
 
 const geistSans = Geist({
@@ -12,20 +13,37 @@ const geistMono = Geist_Mono({
   subsets: ["latin"],
 });
 
+// Favicons come from app/icon.png and app/apple-icon.png; the share image from app/opengraph-image.tsx.
 export const metadata: Metadata = {
-  title: "GenovaaTech Labs | Embedded Systems • IoT • Edge AI",
-  description:
-    "GenovaaTech Labs – Embedded Systems Development, IoT Solutions, Edge AI Products, and Engineering Training Programs.",
+  metadataBase: new URL(SITE_URL),
+  title: {
+    default: SITE_TITLE,
+    template: `%s | ${SITE_NAME}`,
+  },
+  description: SITE_DESCRIPTION,
   keywords: [
     "Embedded Systems",
     "IoT",
     "Edge AI",
     "FPGA",
+    "RTOS",
+    "Embedded Training",
     "Embedded Consultancy",
     "GenovaaTech Labs",
   ],
-  icons: {
-    icon: "/logo.png",
+  alternates: { canonical: "/" },
+  openGraph: {
+    type: "website",
+    url: "/",
+    siteName: SITE_NAME,
+    title: SITE_TITLE,
+    description: SITE_DESCRIPTION,
+    locale: "en_IN",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: SITE_TITLE,
+    description: SITE_DESCRIPTION,
   },
 };
 
