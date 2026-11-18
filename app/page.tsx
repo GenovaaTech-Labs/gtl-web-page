@@ -1,8 +1,13 @@
 import Image from "next/image";
 import ParticlesBG from "@/components/ParticlesBG";
 import Navbar from "@/components/Navbar";
+import Footer from "@/components/Footer";
 import Reveal from "@/components/Reveal";
-import { COURSES, CONTACT_EMAIL } from "@/lib/enquiry";
+import CountUp from "@/components/CountUp";
+import Icon from "@/components/Icon";
+import ProjectsGrid from "@/components/ProjectsGrid";
+import { PROCESS, SERVICES, STATS, TECH_STACK, TRAINING, WHY_US } from "@/lib/content";
+import { CONTACT_EMAIL } from "@/lib/enquiry";
 import { SITE_DESCRIPTION, SITE_NAME, SITE_URL } from "@/lib/site";
 
 // Google Forms are used until the /contact form's email backend is set up.
@@ -10,104 +15,15 @@ const PROJECT_FORM_URL = "https://forms.gle/T26YRJUGvZbzGdyX8";
 const SERVICES_FORM_URL = "https://forms.gle/cPjsh5BADUWXDxhL8";
 const TRAINING_FORM_URL = "https://forms.gle/4CAXfvvgSEZoz46CA";
 
-const STATS = [
-  { value: "50+", label: "Projects Delivered" },
-  { value: "100+", label: "Students Trained" },
-  { value: "100%", label: "Practical Learning" },
-];
-
-const WHY_US = [
-  {
-    icon: "🛠️",
-    title: "Industry Projects",
-    desc: "Hands-on experience through real-world embedded and IoT projects.",
-  },
-  {
-    icon: "🎓",
-    title: "Expert Mentorship",
-    desc: "Learn directly from experienced engineers with industry exposure.",
-  },
-  {
-    icon: "💡",
-    title: "Practical Training",
-    desc: "Build products and gain skills through implementation-focused learning.",
-  },
-  {
-    icon: "🤝",
-    title: "End-to-End Support",
-    desc: "From ideation to deployment, we support every stage of development.",
-  },
-];
-
-const PROCESS = [
-  {
-    title: "Idea",
-    desc: "Understanding the problem and defining the embedded system architecture.",
-  },
-  {
-    title: "Prototype",
-    desc: "Developing firmware, hardware interfaces, and initial IoT connectivity.",
-  },
-  {
-    title: "Product",
-    desc: "Optimizing firmware, integrating sensors, and implementing edge intelligence.",
-  },
-  {
-    title: "Deployment",
-    desc: "Testing, validation, and deploying the system into real-world applications.",
-  },
-];
-
-const SERVICES = [
-  "Embedded Systems Development",
-  "IoT Product Design",
-  "Edge AI Solutions",
-  "Engineering Training",
-  "Project Consulting",
-  "Custom Firmware",
-  "System Optimization",
-  "Technical Workshops",
-];
-
-const TECH_STACK = [
-  "ESP32",
-  "STM32",
-  "Embedded Linux",
-  "FreeRTOS",
-  "Edge AI",
-  "IoT Systems",
-  "C Programming",
-  "C++",
-  "Python",
-  "TensorFlow Lite",
-  "Raspberry Pi",
-  "FPGA",
-];
-
-const PROJECTS = [
-  "Smart Home Automation",
-  "AI-Powered Surveillance Camera",
-  "Wearable Health Monitor",
-  "Smart Agriculture System",
-  "Industrial IoT Platform",
-  "Alcohol Detection Device",
-  "Smart Energy Meter",
-  "Driver Monitoring System",
-  "Smart Parking Solution",
-  "AI-Powered Personal Assistant",
-  "Home Security System",
-  "Smart Waste Management",
-];
-
 /** Stagger cards within a row only, so later rows don't wait seconds to appear. */
 const stagger = (index: number, perRow: number) => (index % perRow) * 0.1;
 
 const primaryButton =
-  "px-8 py-3 bg-[#00BFFF] text-black rounded-xl font-semibold hover:scale-110 transition";
+  "inline-block px-8 py-3 bg-[#00BFFF] text-black rounded-xl font-semibold hover:scale-110 transition";
 const outlineButton =
-  "px-8 py-3 border border-[#00BFFF] rounded-xl hover:bg-[#00BFFF] hover:text-black transition";
-const card =
-  "p-8 rounded-xl border border-gray-800 hover:border-[#00BFFF] hover:scale-105 transition";
+  "inline-block px-8 py-3 border border-[#00BFFF] rounded-xl hover:bg-[#00BFFF] hover:text-black transition";
+const hoverCard = "rounded-xl border border-gray-800 hover:border-[#00BFFF] transition duration-300";
+const sectionTitle = "text-3xl md:text-4xl font-bold";
 
 const organizationJsonLd = {
   "@context": "https://schema.org",
@@ -178,7 +94,7 @@ export default function Home() {
       {/* ABOUT US */}
       <section id="about" className="py-24 md:py-32 px-6 md:px-8 bg-[#111827]">
         <div className="max-w-5xl mx-auto text-center">
-          <h2 className="text-4xl font-bold mb-8">About GenovaaTech Labs</h2>
+          <h2 className={`${sectionTitle} mb-8`}>About GenovaaTech Labs</h2>
           <p className="text-gray-400 text-lg leading-8">
             GenovaaTech Labs is a deep-tech engineering company focused on Embedded Systems, IoT,
             Edge AI, and engineering education. We bridge the gap between theory and real-world
@@ -187,20 +103,22 @@ export default function Home() {
           </p>
         </div>
 
-        <div className="grid md:grid-cols-3 gap-8 mt-16">
+        <div className="max-w-5xl mx-auto grid grid-cols-3 gap-3 md:gap-8 mt-16 text-center">
           {STATS.map((item) => (
-            <div key={item.label} className="p-8 bg-[#0B1120] rounded-xl border border-gray-800">
-              <h3 className="text-4xl font-bold text-[#00BFFF]">{item.value}</h3>
-              <p className="mt-3 text-gray-400">{item.label}</p>
+            <div key={item.label} className="p-4 md:p-8 bg-[#0B1120] rounded-xl border border-gray-800">
+              <p className="text-2xl md:text-4xl font-bold text-[#00BFFF]">
+                <CountUp value={item.value} />
+              </p>
+              <p className="mt-2 md:mt-3 text-xs md:text-base text-gray-400">{item.label}</p>
             </div>
           ))}
         </div>
       </section>
 
       {/* WHY CHOOSE US */}
-      <section className="py-24 px-6 md:px-8 bg-[#0B1120] text-center">
+      <section id="why-us" className="py-24 px-6 md:px-8 bg-[#0B1120] text-center">
         <div className="max-w-6xl mx-auto">
-          <h2 className="text-4xl font-bold mb-4">Why Choose GenovaaTech Labs?</h2>
+          <h2 className={`${sectionTitle} mb-4`}>Why Choose GenovaaTech Labs?</h2>
           <p className="text-gray-400 max-w-3xl mx-auto mb-16">
             We combine industry expertise, practical learning, and innovative engineering to
             deliver solutions that create real impact.
@@ -211,10 +129,10 @@ export default function Home() {
               <Reveal
                 key={item.title}
                 delay={stagger(i, 4)}
-                className="p-8 bg-[#111827] rounded-2xl border border-gray-800 hover:border-[#00BFFF] hover:-translate-y-2 transition duration-300"
+                className={`${hoverCard} p-8 bg-[#111827] rounded-2xl hover:-translate-y-2`}
               >
-                <div className="text-5xl mb-6" aria-hidden="true">
-                  {item.icon}
+                <div className="mx-auto mb-6 flex h-14 w-14 items-center justify-center rounded-xl bg-[#00BFFF]/10 text-[#00BFFF]">
+                  <Icon name={item.icon} className="h-7 w-7" />
                 </div>
                 <h3 className="text-xl font-semibold mb-4">{item.title}</h3>
                 <p className="text-gray-400 text-sm leading-7">{item.desc}</p>
@@ -225,12 +143,12 @@ export default function Home() {
       </section>
 
       {/* ENGINEERING PROCESS */}
-      <section className="py-28 bg-[#111827] text-center px-6">
-        <h2 className="text-4xl font-bold mb-20">Our Engineering Process</h2>
+      <section id="process" className="py-24 md:py-28 bg-[#111827] text-center px-6">
+        <h2 className={`${sectionTitle} mb-16 md:mb-20`}>Our Engineering Process</h2>
 
-        <div className="max-w-6xl mx-auto grid md:grid-cols-4 gap-12">
+        <div className="max-w-6xl mx-auto grid sm:grid-cols-2 md:grid-cols-4 gap-8 md:gap-12">
           {PROCESS.map((step, i) => (
-            <Reveal key={step.title} delay={stagger(i, 4)} className={`${card} bg-[#0B1120]`}>
+            <Reveal key={step.title} delay={stagger(i, 4)} className={`${hoverCard} p-8 bg-[#0B1120] hover:scale-105`}>
               <div className="text-[#00BFFF] text-3xl font-bold mb-4">0{i + 1}</div>
               <h3 className="text-xl font-semibold mb-3">{step.title}</h3>
               <p className="text-gray-400 text-sm">{step.desc}</p>
@@ -240,13 +158,25 @@ export default function Home() {
       </section>
 
       {/* SERVICES */}
-      <section id="services" className="py-32 text-center px-8">
-        <h2 className="text-4xl font-bold mb-16">What We Do</h2>
+      <section id="services" className="py-24 md:py-32 text-center px-6 md:px-8">
+        <h2 className={`${sectionTitle} mb-4`}>What We Do</h2>
+        <p className="text-gray-400 max-w-3xl mx-auto mb-16">
+          From concept to deployment — engineering services and training for students, startups
+          and businesses.
+        </p>
 
-        <div className="grid md:grid-cols-4 gap-10 max-w-6xl mx-auto">
-          {SERVICES.map((item, i) => (
-            <Reveal key={item} delay={stagger(i, 4)} className={`${card} bg-[#111827]`}>
-              {item}
+        <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6 max-w-6xl mx-auto text-left">
+          {SERVICES.map((service, i) => (
+            <Reveal
+              key={service.title}
+              delay={stagger(i, 4)}
+              className={`${hoverCard} p-6 bg-[#111827] hover:-translate-y-1`}
+            >
+              <div className="flex h-12 w-12 items-center justify-center rounded-lg bg-[#00BFFF]/10 text-[#00BFFF]">
+                <Icon name={service.icon} className="h-6 w-6" />
+              </div>
+              <h3 className="mt-5 text-lg font-semibold">{service.title}</h3>
+              <p className="mt-2 text-sm text-gray-400 leading-6">{service.desc}</p>
             </Reveal>
           ))}
         </div>
@@ -259,15 +189,12 @@ export default function Home() {
       </section>
 
       {/* TECH STACK */}
-      <section className="py-24 text-center px-6 bg-[#0B1120]">
-        <h2 className="text-4xl font-bold mb-14">Technologies We Work With</h2>
+      <section id="tech" className="py-24 text-center px-6 bg-[#0B1120]">
+        <h2 className={`${sectionTitle} mb-14`}>Technologies We Work With</h2>
 
-        <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-8 max-w-6xl mx-auto">
+        <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-4 md:gap-8 max-w-6xl mx-auto">
           {TECH_STACK.map((tech) => (
-            <div
-              key={tech}
-              className="p-6 bg-[#111827] rounded-xl border border-gray-800 hover:border-[#00BFFF] hover:scale-105 transition"
-            >
+            <div key={tech} className={`${hoverCard} flex items-center justify-center p-4 md:p-6 bg-[#111827] hover:scale-105`}>
               <p className="text-[#00BFFF] font-semibold">{tech}</p>
             </div>
           ))}
@@ -275,16 +202,13 @@ export default function Home() {
       </section>
 
       {/* PROJECTS */}
-      <section id="projects" className="py-32 bg-[#111827] text-center px-8">
-        <h2 className="text-4xl font-bold mb-16">Featured Projects</h2>
+      <section id="projects" className="py-24 md:py-32 bg-[#111827] text-center px-6 md:px-8">
+        <h2 className={`${sectionTitle} mb-4`}>Featured Projects</h2>
+        <p className="text-gray-400 max-w-3xl mx-auto mb-10">
+          A selection of embedded, IoT and Edge AI systems we have built and mentored.
+        </p>
 
-        <div className="grid md:grid-cols-4 gap-10 max-w-6xl mx-auto">
-          {PROJECTS.map((item, i) => (
-            <Reveal key={item} delay={stagger(i, 4)} className={`${card} bg-[#0B1120]`}>
-              {item}
-            </Reveal>
-          ))}
-        </div>
+        <ProjectsGrid />
 
         <div className="mt-12">
           <a href={PROJECT_FORM_URL} target="_blank" rel="noopener noreferrer" className={primaryButton}>
@@ -294,15 +218,43 @@ export default function Home() {
       </section>
 
       {/* TRAINING */}
-      <section id="training" className="py-20 md:py-32 text-center px-6 md:px-8">
-        <h2 className="text-4xl font-bold mb-16">Training Programs</h2>
+      <section id="training" className="py-24 md:py-32 text-center px-6 md:px-8">
+        <h2 className={`${sectionTitle} mb-4`}>Training Programs</h2>
+        <p className="text-gray-400 max-w-3xl mx-auto mb-16">
+          Industry-oriented, hands-on programs that take you from fundamentals to real projects.
+        </p>
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-10 max-w-5xl mx-auto">
-          {COURSES.map((item) => (
-            <div key={item} className={`${card} bg-[#111827]`}>
-              <p className="text-lg font-semibold">{item}</p>
-            </div>
-          ))}
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 max-w-6xl mx-auto text-left">
+          {TRAINING.map((program, i) => {
+            const details = [program.duration, program.mode, program.fee].filter(Boolean);
+            return (
+              <Reveal
+                key={program.title}
+                delay={stagger(i, 3)}
+                className={`${hoverCard} flex flex-col p-6 bg-[#111827] hover:-translate-y-1`}
+              >
+                <div className="flex items-start justify-between gap-3">
+                  <h3 className="text-lg font-semibold">{program.title}</h3>
+                  <span className="shrink-0 text-xs font-medium text-[#00BFFF] bg-[#00BFFF]/10 rounded-full px-3 py-1">
+                    {program.level}
+                  </span>
+                </div>
+                <ul className="mt-4 space-y-2 text-sm text-gray-400">
+                  {program.topics.map((topic) => (
+                    <li key={topic} className="flex gap-2">
+                      <span className="text-[#00BFFF]" aria-hidden="true">
+                        ▸
+                      </span>
+                      {topic}
+                    </li>
+                  ))}
+                </ul>
+                {details.length > 0 && (
+                  <p className="mt-auto pt-5 text-xs text-gray-300">{details.join(" • ")}</p>
+                )}
+              </Reveal>
+            );
+          })}
         </div>
 
         <div className="mt-14">
@@ -310,7 +262,7 @@ export default function Home() {
             href={TRAINING_FORM_URL}
             target="_blank"
             rel="noopener noreferrer"
-            className="px-10 py-4 bg-[#00BFFF] text-black font-semibold rounded-xl hover:scale-110 transition"
+            className="inline-block px-10 py-4 bg-[#00BFFF] text-black font-semibold rounded-xl hover:scale-110 transition"
           >
             Register Now
           </a>
@@ -318,20 +270,29 @@ export default function Home() {
       </section>
 
       {/* CONTACT */}
-      <section id="contact" className="py-32 px-6 bg-[#111827] text-center">
-        <h2 className="text-4xl font-bold mb-6">Contact Us</h2>
-        <p className="text-gray-400 mb-8">Let&apos;s collaborate on projects or training.</p>
-        <a href={`mailto:${CONTACT_EMAIL}`} className={`${primaryButton} inline-block break-all`}>
-          {CONTACT_EMAIL}
-        </a>
+      <section id="contact" className="py-24 md:py-32 px-6 bg-[#111827] text-center">
+        <h2 className={`${sectionTitle} mb-6`}>Contact Us</h2>
+        <p className="text-gray-400 mb-10 max-w-2xl mx-auto">
+          Have a product idea, need engineering support, or want to join a training program?
+          Let&apos;s talk.
+        </p>
+        <div className="flex flex-wrap justify-center gap-4">
+          <a href={PROJECT_FORM_URL} target="_blank" rel="noopener noreferrer" className={primaryButton}>
+            Request a Project
+          </a>
+          <a href={TRAINING_FORM_URL} target="_blank" rel="noopener noreferrer" className={outlineButton}>
+            Register for Training
+          </a>
+        </div>
+        <p className="mt-8 text-gray-400">
+          Or email us at{" "}
+          <a href={`mailto:${CONTACT_EMAIL}`} className="text-[#00BFFF] hover:underline break-all">
+            {CONTACT_EMAIL}
+          </a>
+        </p>
       </section>
 
-      {/* FOOTER */}
-      <footer className="py-10 border-t border-gray-800 text-center text-gray-400">
-        <p className="text-white font-semibold">GenovaaTech Labs</p>
-        <p className="text-sm mt-2">Embedded Systems • IoT • Edge AI</p>
-        <p className="text-sm mt-3">© {new Date().getFullYear()} GenovaaTech Labs</p>
-      </footer>
+      <Footer />
     </main>
   );
 }

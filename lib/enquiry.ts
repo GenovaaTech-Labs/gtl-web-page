@@ -1,16 +1,9 @@
+import { TRAINING } from "@/lib/content";
+
 export const CONTACT_EMAIL = "connect@genovaatechlabs.com";
 
-export const COURSES = [
-  "C Programming",
-  "C++ Programming",
-  "Embedded Linux",
-  "RTOS Development",
-  "Embedded AI Programming",
-  "IoT System Design",
-  "FPGA Development",
-  "Mini Projects",
-  "Major Projects",
-] as const;
+/** Program names for the enquiry form – kept in sync with the Training section. */
+export const COURSES: readonly string[] = TRAINING.map((program) => program.title);
 
 export const ENQUIRY_TYPES = {
   project: "Custom Project",
