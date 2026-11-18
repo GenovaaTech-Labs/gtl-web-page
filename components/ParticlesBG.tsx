@@ -4,7 +4,8 @@ import { useEffect, useState } from "react";
 import Particles, { initParticlesEngine } from "@tsparticles/react";
 import { loadSlim } from "@tsparticles/slim";
 
-export default function ParticlesBG() {
+/** Animated particle network. Fills its positioned parent (not the whole screen). */
+export default function ParticlesBG({ className = "" }: { className?: string }) {
   const [init, setInit] = useState(false);
   const [reduceMotion, setReduceMotion] = useState(false);
 
@@ -26,11 +27,13 @@ export default function ParticlesBG() {
   return (
     <Particles
       id="tsparticles"
+      className={className}
       options={{
+        fullScreen: { enable: false },
         background: { color: "transparent" },
         fpsLimit: 60,
         particles: {
-          number: { value: 40 },
+          number: { value: 40, density: { enable: true } },
           color: { value: "#00BFFF" },
           links: {
             enable: true,

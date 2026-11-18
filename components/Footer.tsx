@@ -2,15 +2,7 @@ import Image from "next/image";
 import { Mail } from "lucide-react";
 import { TRAINING } from "@/lib/content";
 import { CONTACT_EMAIL } from "@/lib/enquiry";
-import { ADDRESS, PHONE, SITE_NAME, SOCIAL_LINKS } from "@/lib/site";
-
-const QUICK_LINKS = [
-  { href: "#about", label: "About Us" },
-  { href: "#services", label: "Services" },
-  { href: "#projects", label: "Projects" },
-  { href: "#training", label: "Training" },
-  { href: "#contact", label: "Contact" },
-];
+import { ADDRESS, NAV_LINKS, PHONE, SITE_NAME, SOCIAL_LINKS } from "@/lib/site";
 
 const SOCIAL_LABELS: Record<keyof typeof SOCIAL_LINKS, string> = {
   linkedin: "LinkedIn",
@@ -43,9 +35,9 @@ export default function Footer() {
         <nav aria-label="Footer">
           <h2 className="text-sm font-semibold uppercase tracking-wider text-white">Quick Links</h2>
           <ul className="mt-4 space-y-2 text-sm">
-            {QUICK_LINKS.map((link) => (
-              <li key={link.href}>
-                <a href={link.href} className={linkClass}>
+            {NAV_LINKS.map((link) => (
+              <li key={link.id}>
+                <a href={`#${link.id}`} className={linkClass}>
                   {link.label}
                 </a>
               </li>
@@ -56,7 +48,7 @@ export default function Footer() {
         <div>
           <h2 className="text-sm font-semibold uppercase tracking-wider text-white">Programs</h2>
           <ul className="mt-4 space-y-2 text-sm">
-            {TRAINING.slice(0, 6).map((program) => (
+            {TRAINING.filter((program) => program.kind === "course").slice(0, 6).map((program) => (
               <li key={program.title}>
                 <a href="#training" className={linkClass}>
                   {program.title}

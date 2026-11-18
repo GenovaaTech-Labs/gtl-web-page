@@ -19,3 +19,19 @@ export const SOCIAL_LINKS: Record<"linkedin" | "instagram" | "youtube" | "whatsa
 /** Optional – shown in the footer when filled in. */
 export const PHONE: string = "";
 export const ADDRESS: string = "";
+
+/** Google Forms – used until the /contact form's email backend is set up. */
+export const FORMS = {
+  project: "https://forms.gle/T26YRJUGvZbzGdyX8",
+  services: "https://forms.gle/cPjsh5BADUWXDxhL8",
+  training: "https://forms.gle/4CAXfvvgSEZoz46CA",
+};
+
+/** Home page sections shown in the navbar and footer (in page order). */
+export const NAV_LINKS = [
+  { id: "services", label: "Services" },
+  { id: "projects", label: "Projects" },
+  { id: "training", label: "Training" },
+  { id: "about", label: "About" },
+  { id: "contact", label: "Contact" },
+];

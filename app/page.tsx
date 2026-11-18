@@ -1,4 +1,5 @@
 import Image from "next/image";
+import { ArrowRight, Mail } from "lucide-react";
 import ParticlesBG from "@/components/ParticlesBG";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
@@ -6,24 +7,17 @@ import Reveal from "@/components/Reveal";
 import CountUp from "@/components/CountUp";
 import Icon from "@/components/Icon";
 import ProjectsGrid from "@/components/ProjectsGrid";
+import SectionHeader from "@/components/SectionHeader";
+import { badge, card, iconBox, outlineButton, primaryButton, section } from "@/components/ui";
 import { PROCESS, SERVICES, STATS, TECH_STACK, TRAINING, WHY_US } from "@/lib/content";
 import { CONTACT_EMAIL } from "@/lib/enquiry";
-import { SITE_DESCRIPTION, SITE_NAME, SITE_URL } from "@/lib/site";
+import { FORMS, SITE_DESCRIPTION, SITE_NAME, SITE_URL } from "@/lib/site";
 
-// Google Forms are used until the /contact form's email backend is set up.
-const PROJECT_FORM_URL = "https://forms.gle/T26YRJUGvZbzGdyX8";
-const SERVICES_FORM_URL = "https://forms.gle/cPjsh5BADUWXDxhL8";
-const TRAINING_FORM_URL = "https://forms.gle/4CAXfvvgSEZoz46CA";
+const COURSES = TRAINING.filter((program) => program.kind === "course");
+const STUDENT_PROJECTS = TRAINING.filter((program) => program.kind === "project");
 
-/** Stagger cards within a row only, so later rows don't wait seconds to appear. */
-const stagger = (index: number, perRow: number) => (index % perRow) * 0.1;
-
-const primaryButton =
-  "inline-block px-8 py-3 bg-[#00BFFF] text-black rounded-xl font-semibold hover:scale-110 transition";
-const outlineButton =
-  "inline-block px-8 py-3 border border-[#00BFFF] rounded-xl hover:bg-[#00BFFF] hover:text-black transition";
-const hoverCard = "rounded-xl border border-gray-800 hover:border-[#00BFFF] transition duration-300";
-const sectionTitle = "text-3xl md:text-4xl font-bold";
+/** Stagger cards within a row only, so later rows don't wait to appear. */
+const stagger = (index: number, perRow: number) => (index % perRow) * 0.08;
 
 const organizationJsonLd = {
   "@context": "https://schema.org",
@@ -38,207 +32,143 @@ const organizationJsonLd = {
 
 export default function Home() {
   return (
-    <main className="relative bg-[#0B1120] text-white overflow-hidden">
+    <main className="relative overflow-hidden bg-[#0B1120] text-white">
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(organizationJsonLd) }}
       />
 
-      <ParticlesBG />
-
-      {/* Circuit Grid */}
-      <div className="absolute inset-0 opacity-20 pointer-events-none">
-        <div className="w-full h-full bg-[linear-gradient(90deg,#00BFFF22_1px,transparent_1px),linear-gradient(#00BFFF22_1px,transparent_1px)] bg-[size:60px_60px]" />
+      {/* Faint circuit grid behind the whole page */}
+      <div className="pointer-events-none absolute inset-0 opacity-20">
+        <div className="h-full w-full bg-[linear-gradient(90deg,#00BFFF22_1px,transparent_1px),linear-gradient(#00BFFF22_1px,transparent_1px)] bg-[size:60px_60px]" />
       </div>
 
       <Navbar />
 
-      {/* HERO */}
-      <section className="relative isolate min-h-screen flex flex-col justify-center items-center text-center px-6 pt-28 pb-16">
-        <div className="absolute w-[600px] max-w-full h-[600px] bg-[#00BFFF]/20 blur-[160px] rounded-full -z-10" />
+      {/* ───────────── HERO ───────────── */}
+      <section id="top" className="relative isolate px-6 pb-20 pt-32 md:pb-28 md:pt-40">
+        <ParticlesBG className="absolute inset-0 -z-10 h-full w-full" />
+        <div className="absolute left-1/2 top-1/3 -z-10 h-[500px] w-[500px] max-w-full -translate-x-1/2 rounded-full bg-[#00BFFF]/15 blur-[150px] lg:left-3/4" />
 
-        <Reveal as="h1" immediate y={-40} className="text-4xl md:text-6xl lg:text-7xl font-bold">
-          Powering Embedded Intelligence
-        </Reveal>
+        <div className="mx-auto grid max-w-6xl items-center gap-12 lg:grid-cols-[1.3fr_0.7fr]">
+          <div className="text-center lg:text-left">
+            <p className={badge}>Embedded Systems • IoT • Edge AI • RTOS • FPGA</p>
 
-        <p className="mt-6 text-xl text-gray-400">Embedded AI • IoT • RTOS • Edge AI • FPGA</p>
+            <Reveal
+              as="h1"
+              immediate
+              y={-30}
+              className="mt-6 text-4xl font-bold leading-tight md:text-6xl"
+            >
+              Powering Embedded <span className="text-[#00BFFF]">Intelligence</span>
+            </Reveal>
 
-        {/* CHIP */}
-        <div className="relative mt-16">
-          <div className="w-[180px] h-[180px] md:w-[260px] md:h-[260px] border border-[#00BFFF] rounded-xl flex flex-col items-center justify-center bg-[#0B1120] shadow-[0_0_60px_#00BFFF]">
+            <p className="mx-auto mt-6 max-w-xl text-lg leading-8 text-gray-400 lg:mx-0">
+              We design and build embedded, IoT and Edge AI products for startups and businesses —
+              and train engineers through hands-on, industry-oriented programs.
+            </p>
+
+            <div className="mt-10 flex flex-wrap justify-center gap-4 lg:justify-start">
+              <a href="#services" className={primaryButton}>
+                Our Services <ArrowRight className="h-4 w-4" aria-hidden="true" />
+              </a>
+              <a href="#training" className={outlineButton}>
+                Training Programs
+              </a>
+            </div>
+
+            <dl className="mx-auto mt-12 grid max-w-lg grid-cols-3 gap-4 border-t border-gray-800 pt-8 lg:mx-0">
+              {STATS.map((stat) => (
+                <div key={stat.label} className="flex flex-col">
+                  <dt className="text-xs text-gray-400 md:text-sm">{stat.label}</dt>
+                  <dd className="order-first text-2xl font-bold text-[#00BFFF] md:text-3xl">
+                    <CountUp value={stat.value} />
+                  </dd>
+                </div>
+              ))}
+            </dl>
+          </div>
+
+          <div className="relative mx-auto -order-1 lg:order-none">
+            <div className="absolute inset-0 rounded-full bg-[#00BFFF]/25 blur-[80px]" />
             <Image
               src="/logo.png"
               alt="GenovaaTech Labs logo"
               width={512}
               height={427}
               preload
-              sizes="(min-width: 768px) 144px, 112px"
-              className="w-28 md:w-36 h-auto object-contain drop-shadow-[0_0_15px_#00BFFF]"
+              sizes="(min-width: 1024px) 288px, 144px"
+              className="relative w-36 drop-shadow-[0_0_25px_#00BFFF] lg:w-72"
             />
-            <p className="text-[#00BFFF] font-bold text-lg">GenovaaTech Labs</p>
-            <p className="text-xs text-gray-400 mt-2">Engineering Embedded Intelligence</p>
-          </div>
-          <div className="absolute inset-0 blur-[100px] bg-[#00BFFF]/30 rounded-full" />
-        </div>
-
-        <div className="flex flex-wrap justify-center gap-4 md:gap-6 mt-12">
-          <a href="#services" className={primaryButton}>
-            Explore Services
-          </a>
-          <a href="#training" className={outlineButton}>
-            Start Learning
-          </a>
-        </div>
-      </section>
-
-      {/* ABOUT US */}
-      <section id="about" className="py-24 md:py-32 px-6 md:px-8 bg-[#111827]">
-        <div className="max-w-5xl mx-auto text-center">
-          <h2 className={`${sectionTitle} mb-8`}>About GenovaaTech Labs</h2>
-          <p className="text-gray-400 text-lg leading-8">
-            GenovaaTech Labs is a deep-tech engineering company focused on Embedded Systems, IoT,
-            Edge AI, and engineering education. We bridge the gap between theory and real-world
-            innovation by delivering intelligent solutions, industry-oriented training, and
-            customized project development for students, startups, and businesses.
-          </p>
-        </div>
-
-        <div className="max-w-5xl mx-auto grid grid-cols-3 gap-3 md:gap-8 mt-16 text-center">
-          {STATS.map((item) => (
-            <div key={item.label} className="p-4 md:p-8 bg-[#0B1120] rounded-xl border border-gray-800">
-              <p className="text-2xl md:text-4xl font-bold text-[#00BFFF]">
-                <CountUp value={item.value} />
-              </p>
-              <p className="mt-2 md:mt-3 text-xs md:text-base text-gray-400">{item.label}</p>
-            </div>
-          ))}
-        </div>
-      </section>
-
-      {/* WHY CHOOSE US */}
-      <section id="why-us" className="py-24 px-6 md:px-8 bg-[#0B1120] text-center">
-        <div className="max-w-6xl mx-auto">
-          <h2 className={`${sectionTitle} mb-4`}>Why Choose GenovaaTech Labs?</h2>
-          <p className="text-gray-400 max-w-3xl mx-auto mb-16">
-            We combine industry expertise, practical learning, and innovative engineering to
-            deliver solutions that create real impact.
-          </p>
-
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-            {WHY_US.map((item, i) => (
-              <Reveal
-                key={item.title}
-                delay={stagger(i, 4)}
-                className={`${hoverCard} p-8 bg-[#111827] rounded-2xl hover:-translate-y-2`}
-              >
-                <div className="mx-auto mb-6 flex h-14 w-14 items-center justify-center rounded-xl bg-[#00BFFF]/10 text-[#00BFFF]">
-                  <Icon name={item.icon} className="h-7 w-7" />
-                </div>
-                <h3 className="text-xl font-semibold mb-4">{item.title}</h3>
-                <p className="text-gray-400 text-sm leading-7">{item.desc}</p>
-              </Reveal>
-            ))}
           </div>
         </div>
       </section>
 
-      {/* ENGINEERING PROCESS */}
-      <section id="process" className="py-24 md:py-28 bg-[#111827] text-center px-6">
-        <h2 className={`${sectionTitle} mb-16 md:mb-20`}>Our Engineering Process</h2>
+      {/* ───────────── SERVICES ───────────── */}
+      <section id="services" className={`relative ${section}`}>
+        <SectionHeader eyebrow="Services" title="What We Do">
+          From concept to deployment — engineering services and training for students, startups and
+          businesses.
+        </SectionHeader>
 
-        <div className="max-w-6xl mx-auto grid sm:grid-cols-2 md:grid-cols-4 gap-8 md:gap-12">
-          {PROCESS.map((step, i) => (
-            <Reveal key={step.title} delay={stagger(i, 4)} className={`${hoverCard} p-8 bg-[#0B1120] hover:scale-105`}>
-              <div className="text-[#00BFFF] text-3xl font-bold mb-4">0{i + 1}</div>
-              <h3 className="text-xl font-semibold mb-3">{step.title}</h3>
-              <p className="text-gray-400 text-sm">{step.desc}</p>
-            </Reveal>
-          ))}
-        </div>
-      </section>
-
-      {/* SERVICES */}
-      <section id="services" className="py-24 md:py-32 text-center px-6 md:px-8">
-        <h2 className={`${sectionTitle} mb-4`}>What We Do</h2>
-        <p className="text-gray-400 max-w-3xl mx-auto mb-16">
-          From concept to deployment — engineering services and training for students, startups
-          and businesses.
-        </p>
-
-        <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6 max-w-6xl mx-auto text-left">
+        <div className="mx-auto grid max-w-6xl gap-6 sm:grid-cols-2 lg:grid-cols-4">
           {SERVICES.map((service, i) => (
-            <Reveal
-              key={service.title}
-              delay={stagger(i, 4)}
-              className={`${hoverCard} p-6 bg-[#111827] hover:-translate-y-1`}
-            >
-              <div className="flex h-12 w-12 items-center justify-center rounded-lg bg-[#00BFFF]/10 text-[#00BFFF]">
-                <Icon name={service.icon} className="h-6 w-6" />
+            <Reveal key={service.title} delay={stagger(i, 4)} className={`${card} flex gap-4 sm:block`}>
+              <div className={iconBox}>
+                <Icon name={service.icon} className="h-5 w-5" />
               </div>
-              <h3 className="mt-5 text-lg font-semibold">{service.title}</h3>
-              <p className="mt-2 text-sm text-gray-400 leading-6">{service.desc}</p>
+              <div>
+                <h3 className="text-lg font-semibold sm:mt-5">{service.title}</h3>
+                <p className="mt-2 text-sm leading-6 text-gray-400">{service.desc}</p>
+              </div>
             </Reveal>
           ))}
         </div>
 
-        <div className="mt-12">
-          <a href={SERVICES_FORM_URL} target="_blank" rel="noopener noreferrer" className={primaryButton}>
-            Get Customized Project
+        <div className="mx-auto mt-14 max-w-4xl text-center">
+          <p className="text-sm font-semibold uppercase tracking-widest text-gray-400">
+            Technologies we work with
+          </p>
+          <ul className="mt-5 flex flex-wrap justify-center gap-3">
+            {TECH_STACK.map((tech) => (
+              <li
+                key={tech}
+                className="rounded-full border border-gray-800 bg-[#111827] px-4 py-1.5 text-sm text-[#00BFFF]"
+              >
+                {tech}
+              </li>
+            ))}
+          </ul>
+        </div>
+
+        <div className="mt-12 text-center">
+          <a href={FORMS.services} target="_blank" rel="noopener noreferrer" className={primaryButton}>
+            Get a Customized Project
           </a>
         </div>
       </section>
 
-      {/* TECH STACK */}
-      <section id="tech" className="py-24 text-center px-6 bg-[#0B1120]">
-        <h2 className={`${sectionTitle} mb-14`}>Technologies We Work With</h2>
-
-        <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-4 md:gap-8 max-w-6xl mx-auto">
-          {TECH_STACK.map((tech) => (
-            <div key={tech} className={`${hoverCard} flex items-center justify-center p-4 md:p-6 bg-[#111827] hover:scale-105`}>
-              <p className="text-[#00BFFF] font-semibold">{tech}</p>
-            </div>
-          ))}
-        </div>
-      </section>
-
-      {/* PROJECTS */}
-      <section id="projects" className="py-24 md:py-32 bg-[#111827] text-center px-6 md:px-8">
-        <h2 className={`${sectionTitle} mb-4`}>Featured Projects</h2>
-        <p className="text-gray-400 max-w-3xl mx-auto mb-10">
+      {/* ───────────── PROJECTS ───────────── */}
+      <section id="projects" className={`relative bg-[#0E1526] ${section}`}>
+        <SectionHeader eyebrow="Projects" title="Featured Projects">
           A selection of embedded, IoT and Edge AI systems we have built and mentored.
-        </p>
-
+        </SectionHeader>
         <ProjectsGrid />
-
-        <div className="mt-12">
-          <a href={PROJECT_FORM_URL} target="_blank" rel="noopener noreferrer" className={primaryButton}>
-            Get Customized Project
-          </a>
-        </div>
       </section>
 
-      {/* TRAINING */}
-      <section id="training" className="py-24 md:py-32 text-center px-6 md:px-8">
-        <h2 className={`${sectionTitle} mb-4`}>Training Programs</h2>
-        <p className="text-gray-400 max-w-3xl mx-auto mb-16">
+      {/* ───────────── TRAINING ───────────── */}
+      <section id="training" className={`relative ${section}`}>
+        <SectionHeader eyebrow="Training" title="Training Programs">
           Industry-oriented, hands-on programs that take you from fundamentals to real projects.
-        </p>
+        </SectionHeader>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 max-w-6xl mx-auto text-left">
-          {TRAINING.map((program, i) => {
+        <div className="mx-auto grid max-w-6xl gap-6 sm:grid-cols-2 lg:grid-cols-4">
+          {COURSES.map((program, i) => {
             const details = [program.duration, program.mode, program.fee].filter(Boolean);
             return (
-              <Reveal
-                key={program.title}
-                delay={stagger(i, 3)}
-                className={`${hoverCard} flex flex-col p-6 bg-[#111827] hover:-translate-y-1`}
-              >
-                <div className="flex items-start justify-between gap-3">
-                  <h3 className="text-lg font-semibold">{program.title}</h3>
-                  <span className="shrink-0 text-xs font-medium text-[#00BFFF] bg-[#00BFFF]/10 rounded-full px-3 py-1">
-                    {program.level}
-                  </span>
-                </div>
+              <Reveal key={program.title} delay={stagger(i, 4)} className={`${card} flex flex-col`}>
+                <h3 className="text-lg font-semibold">{program.title}</h3>
+                <span className={`${badge} mt-3 self-start`}>{program.level}</span>
                 <ul className="mt-4 space-y-2 text-sm text-gray-400">
                   {program.topics.map((topic) => (
                     <li key={topic} className="flex gap-2">
@@ -255,41 +185,104 @@ export default function Home() {
               </Reveal>
             );
           })}
+
+          {/* Student projects – highlighted as the last card */}
+          <Reveal
+            delay={stagger(COURSES.length, 4)}
+            className="flex flex-col rounded-xl border border-[#00BFFF]/50 bg-gradient-to-br from-[#00BFFF]/15 to-[#111827] p-6 text-left"
+          >
+            <h3 className="text-lg font-semibold">Student Projects</h3>
+            <span className={`${badge} mt-3 self-start`}>Mentored</span>
+            <ul className="mt-4 space-y-3 text-sm">
+              {STUDENT_PROJECTS.map((program) => (
+                <li key={program.title}>
+                  <p className="font-medium text-white">{program.title}</p>
+                  <p className="text-gray-400">{program.topics.join(" • ")}</p>
+                </li>
+              ))}
+            </ul>
+          </Reveal>
         </div>
 
-        <div className="mt-14">
-          <a
-            href={TRAINING_FORM_URL}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="inline-block px-10 py-4 bg-[#00BFFF] text-black font-semibold rounded-xl hover:scale-110 transition"
-          >
+        <div className="mt-12 text-center">
+          <a href={FORMS.training} target="_blank" rel="noopener noreferrer" className={primaryButton}>
             Register Now
           </a>
         </div>
       </section>
 
-      {/* CONTACT */}
-      <section id="contact" className="py-24 md:py-32 px-6 bg-[#111827] text-center">
-        <h2 className={`${sectionTitle} mb-6`}>Contact Us</h2>
-        <p className="text-gray-400 mb-10 max-w-2xl mx-auto">
-          Have a product idea, need engineering support, or want to join a training program?
-          Let&apos;s talk.
-        </p>
-        <div className="flex flex-wrap justify-center gap-4">
-          <a href={PROJECT_FORM_URL} target="_blank" rel="noopener noreferrer" className={primaryButton}>
-            Request a Project
-          </a>
-          <a href={TRAINING_FORM_URL} target="_blank" rel="noopener noreferrer" className={outlineButton}>
-            Register for Training
-          </a>
+      {/* ───────────── ABOUT / WHY US / PROCESS ───────────── */}
+      <section id="about" className={`relative bg-[#0E1526] ${section}`}>
+        <SectionHeader eyebrow="About Us" title="Why GenovaaTech Labs">
+          GenovaaTech Labs is a deep-tech engineering company focused on Embedded Systems, IoT, Edge
+          AI, and engineering education. We bridge the gap between theory and real-world innovation
+          through intelligent solutions, industry-oriented training, and customized project
+          development.
+        </SectionHeader>
+
+        <div className="mx-auto grid max-w-6xl gap-6 sm:grid-cols-2 lg:grid-cols-4">
+          {WHY_US.map((item, i) => (
+            <Reveal key={item.title} delay={stagger(i, 4)} className={`${card} flex gap-4 sm:block`}>
+              <div className={iconBox}>
+                <Icon name={item.icon} className="h-5 w-5" />
+              </div>
+              <div>
+                <h3 className="text-lg font-semibold sm:mt-5">{item.title}</h3>
+                <p className="mt-2 text-sm leading-6 text-gray-400">{item.desc}</p>
+              </div>
+            </Reveal>
+          ))}
         </div>
-        <p className="mt-8 text-gray-400">
-          Or email us at{" "}
-          <a href={`mailto:${CONTACT_EMAIL}`} className="text-[#00BFFF] hover:underline break-all">
+
+        {/* Engineering process as a compact timeline */}
+        <div className="mx-auto mt-20 max-w-6xl">
+          <h3 className="text-center text-2xl font-bold">Our Engineering Process</h3>
+          <div className="relative mt-12">
+            <div
+              aria-hidden="true"
+              className="absolute left-[12.5%] right-[12.5%] top-5 hidden h-px bg-gradient-to-r from-[#00BFFF]/10 via-[#00BFFF]/60 to-[#00BFFF]/10 md:block"
+            />
+            <ol className="relative grid gap-8 md:grid-cols-4">
+            {PROCESS.map((step, i) => (
+              <li key={step.title} className="relative flex gap-4 md:block md:text-center">
+                <span className="relative z-10 flex h-10 w-10 shrink-0 items-center justify-center rounded-full border border-[#00BFFF] bg-[#0B1120] text-sm font-bold text-[#00BFFF] md:mx-auto">
+                  0{i + 1}
+                </span>
+                <div>
+                  <h4 className="font-semibold md:mt-4">{step.title}</h4>
+                  <p className="mt-1 text-sm leading-6 text-gray-400 md:mt-2">{step.desc}</p>
+                </div>
+              </li>
+            ))}
+            </ol>
+          </div>
+        </div>
+      </section>
+
+      {/* ───────────── CONTACT CTA ───────────── */}
+      <section id="contact" className={`relative ${section}`}>
+        <div className="mx-auto max-w-4xl rounded-2xl border border-[#00BFFF]/30 bg-gradient-to-br from-[#00BFFF]/15 via-[#111827] to-[#111827] px-6 py-12 text-center md:px-14 md:py-16">
+          <h2 className="text-3xl font-bold md:text-4xl">Let&apos;s Build Something Together</h2>
+          <p className="mx-auto mt-4 max-w-2xl leading-7 text-gray-400">
+            Have a product idea, need engineering support, or want to join a training program?
+            We&apos;d love to hear from you.
+          </p>
+          <div className="mt-8 flex flex-wrap justify-center gap-4">
+            <a href={FORMS.project} target="_blank" rel="noopener noreferrer" className={primaryButton}>
+              Request a Project
+            </a>
+            <a href={FORMS.training} target="_blank" rel="noopener noreferrer" className={outlineButton}>
+              Register for Training
+            </a>
+          </div>
+          <a
+            href={`mailto:${CONTACT_EMAIL}`}
+            className="mt-8 inline-flex items-center gap-2 break-all text-[#00BFFF] hover:underline"
+          >
+            <Mail className="h-4 w-4 shrink-0" aria-hidden="true" />
             {CONTACT_EMAIL}
           </a>
-        </p>
+        </div>
       </section>
 
       <Footer />

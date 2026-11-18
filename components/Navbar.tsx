@@ -1,104 +1,108 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
+import { Menu, X } from "lucide-react";
+import { FORMS, NAV_LINKS } from "@/lib/site";
 
 export default function Navbar() {
+  const [menuOpen, setMenuOpen] = useState(false);
+  const [active, setActive] = useState<string | null>(null);
 
-const [menuOpen,setMenuOpen] = useState(false);
+  // Highlight the section currently in the middle of the screen (home page only).
+  useEffect(() => {
+    // "top" (the hero) is observed too, so scrolling back up clears the highlight.
+    const sections = ["top", ...NAV_LINKS.map((link) => link.id)]
+      .map((id) => document.getElementById(id))
+      .filter((el): el is HTMLElement => el !== null);
+    if (sections.length <= 1) return;
 
-return (
+    const observer = new IntersectionObserver(
+      (entries) => {
+        for (const entry of entries) {
+          if (entry.isIntersecting) setActive(entry.target.id === "top" ? null : entry.target.id);
+        }
+      },
+      { rootMargin: "-45% 0px -50% 0px" },
+    );
+    sections.forEach((section) => observer.observe(section));
+    return () => observer.disconnect();
+  }, []);
 
-<nav className="fixed top-0 left-0 w-full bg-[#0B1120]/80 backdrop-blur-md border-b border-gray-800 z-50">
+  const linkClass = (id: string) =>
+    `transition hover:text-[#00BFFF] ${active === id ? "text-[#00BFFF]" : "text-gray-300"}`;
 
-<div className="flex justify-between items-center px-6 md:px-10 py-4">
+  return (
+    <nav className="fixed left-0 top-0 z-50 w-full border-b border-gray-800 bg-[#0B1120]/80 backdrop-blur-md">
+      <div className="mx-auto flex max-w-7xl items-center justify-between px-6 py-4">
+        <Link href="/" className="flex items-center gap-3" onClick={() => setMenuOpen(false)}>
+          <Image src="/logo.png" alt="" width={48} height={40} preload className="h-10 w-auto" />
+          <span className="text-xl font-bold text-[#00BFFF]">GenovaaTech Labs</span>
+        </Link>
 
-{/* Logo */}
+        {/* Desktop menu */}
+        <div className="hidden items-center gap-8 text-sm md:flex">
+          {NAV_LINKS.map((link) => (
+            <Link
+              key={link.id}
+              href={`/#${link.id}`}
+              className={linkClass(link.id)}
+              aria-current={active === link.id ? "true" : undefined}
+            >
+              {link.label}
+            </Link>
+          ))}
+          <a
+            href={FORMS.training}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="rounded-lg bg-[#00BFFF] px-4 py-2 font-semibold text-black transition hover:bg-[#33CCFF]"
+          >
+            Register
+          </a>
+        </div>
 
-<Link href="/" className="flex items-center gap-3">
+        {/* Mobile button */}
+        <button
+          type="button"
+          className="text-[#00BFFF] md:hidden"
+          aria-label={menuOpen ? "Close menu" : "Open menu"}
+          aria-expanded={menuOpen}
+          aria-controls="mobile-menu"
+          onClick={() => setMenuOpen(!menuOpen)}
+        >
+          {menuOpen ? <X className="h-7 w-7" /> : <Menu className="h-7 w-7" />}
+        </button>
+      </div>
 
-<Image src="/logo.png" alt="" width={48} height={40} preload className="h-10 w-auto"/>
-
-<span className="text-xl font-bold text-[#00BFFF]">
-GenovaaTech Labs
-</span>
-
-</Link>
-
-{/* Desktop Menu */}
-
-<div className="hidden md:flex gap-8 text-sm">
-
-<Link href="/#about" className="hover:text-[#00BFFF] transition">
-  About Us
-</Link>
-
-<Link href="/#services" className="hover:text-[#00BFFF] transition">
-  Services
-</Link>
-
-<Link href="/#projects" className="hover:text-[#00BFFF] transition">
-  Projects
-</Link>
-
-<Link href="/#training" className="hover:text-[#00BFFF] transition">
-  Training
-</Link>
-
-<Link href="/#contact" className="hover:text-[#00BFFF] transition">
-  Contact
-</Link>
-
-</div>
-
-{/* Mobile Button */}
-
-<button
-className="md:hidden text-[#00BFFF] text-2xl"
-aria-label={menuOpen ? "Close menu" : "Open menu"}
-aria-expanded={menuOpen}
-aria-controls="mobile-menu"
-onClick={()=>setMenuOpen(!menuOpen)}
->
-
-{menuOpen ? "✕" : "☰"}
-
-</button>
-
-</div>
-
-{/* Mobile Menu */}
-
-{menuOpen && (
-
-<div id="mobile-menu" className="md:hidden flex flex-col items-center gap-6 py-6 bg-[#0B1120] border-t border-gray-800">
-
-<Link href="/#about" onClick={()=>setMenuOpen(false)}>
-  About Us
-</Link>
-
-<Link href="/#services" onClick={()=>setMenuOpen(false)}>
-  Services
-</Link>
-
-<Link href="/#projects" onClick={()=>setMenuOpen(false)}>
-  Projects
-</Link>
-
-<Link href="/#training" onClick={()=>setMenuOpen(false)}>
-  Training
-</Link>
-
-<Link href="/#contact" onClick={()=>setMenuOpen(false)}>
-  Contact
-</Link>
-
-</div>
-
-)}
-
-</nav>
-
-);
+      {/* Mobile menu */}
+      {menuOpen && (
+        <div
+          id="mobile-menu"
+          className="flex flex-col items-center gap-6 border-t border-gray-800 bg-[#0B1120] py-6 md:hidden"
+        >
+          {NAV_LINKS.map((link) => (
+            <Link
+              key={link.id}
+              href={`/#${link.id}`}
+              className={linkClass(link.id)}
+              onClick={() => setMenuOpen(false)}
+            >
+              {link.label}
+            </Link>
+          ))}
+          <a
+            href={FORMS.training}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="rounded-lg bg-[#00BFFF] px-6 py-2 font-semibold text-black"
+            onClick={() => setMenuOpen(false)}
+          >
+            Register
+          </a>
+        </div>
+      )}
+    </nav>
+  );
 }

@@ -200,9 +200,19 @@ export const PROJECTS: { title: string; category: ProjectCategory; desc: string 
 // leave them as "" to hide them, or fill them in (e.g. "8 weeks", "Online & Offline", "₹4,999").
 // The program titles also populate the course dropdown on the /contact form.
 // ---------------------------------------------------------------------------
-export const TRAINING = [
+export const TRAINING: {
+  title: string;
+  /** "course" = training program card, "project" = shown in the Student Projects card */
+  kind: "course" | "project";
+  level: string;
+  topics: string[];
+  duration: string;
+  mode: string;
+  fee: string;
+}[] = [
   {
     title: "C Programming",
+    kind: "course",
     level: "Beginner",
     topics: ["Pointers & memory", "Structures & unions", "Bit manipulation", "Debugging"],
     duration: "",
@@ -211,6 +221,7 @@ export const TRAINING = [
   },
   {
     title: "C++ Programming",
+    kind: "course",
     level: "Beginner – Intermediate",
     topics: ["OOP & classes", "Templates & STL", "Modern C++", "C++ for embedded"],
     duration: "",
@@ -219,6 +230,7 @@ export const TRAINING = [
   },
   {
     title: "Embedded Linux",
+    kind: "course",
     level: "Intermediate",
     topics: ["Boot process", "Cross-compilation", "Device tree & drivers", "Yocto / Buildroot basics"],
     duration: "",
@@ -227,6 +239,7 @@ export const TRAINING = [
   },
   {
     title: "RTOS Development",
+    kind: "course",
     level: "Intermediate",
     topics: ["Tasks & scheduling", "Queues & semaphores", "FreeRTOS", "Real-time debugging"],
     duration: "",
@@ -235,6 +248,7 @@ export const TRAINING = [
   },
   {
     title: "Embedded AI Programming",
+    kind: "course",
     level: "Intermediate",
     topics: ["ML fundamentals", "TensorFlow Lite Micro", "Model quantisation", "Deploying on MCUs"],
     duration: "",
@@ -243,6 +257,7 @@ export const TRAINING = [
   },
   {
     title: "IoT System Design",
+    kind: "course",
     level: "Beginner – Intermediate",
     topics: ["Sensors & actuators", "Wi-Fi / BLE", "MQTT", "Cloud dashboards"],
     duration: "",
@@ -251,6 +266,7 @@ export const TRAINING = [
   },
   {
     title: "FPGA Development",
+    kind: "course",
     level: "Intermediate",
     topics: ["Digital design", "Verilog / VHDL", "Simulation", "Synthesis on FPGA boards"],
     duration: "",
@@ -259,6 +275,7 @@ export const TRAINING = [
   },
   {
     title: "Mini Projects",
+    kind: "project",
     level: "All levels",
     topics: ["Guided short projects", "Hardware + firmware", "Portfolio-ready results"],
     duration: "",
@@ -267,6 +284,7 @@ export const TRAINING = [
   },
   {
     title: "Major Projects",
+    kind: "project",
     level: "Final-year students",
     topics: ["End-to-end project build", "Mentorship", "Documentation & demo support"],
     duration: "",
